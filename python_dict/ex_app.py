@@ -72,5 +72,6 @@ if __name__ == "__main__":
     app = App(url, user, password)
     app.create_friendship("Alice", "David")
     app.create_friendship("Alice", "Bob")
+    app.create_friendship("David", "Bob")
     app.find_person("David")
     app.close()
