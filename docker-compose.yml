@@ -11,6 +11,14 @@ services:
     environment:
       NEO4J_AUTH: neo4j/test
 
+  python:
+    container_name: python
+    build: ./python_dict
+    volumes: 
+      - ./python_dict:/dic
+    tty: true
+    stdin_open: true
+
 volumes:
   neo4j-store:
     driver: local
