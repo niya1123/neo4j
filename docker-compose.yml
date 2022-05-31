@@ -7,9 +7,17 @@ services:
       - 7474:7474
       - 7687:7687
     volumes:
-      - neo4j-store:/data
+      - ./neo4j-store:/data
     environment:
-      NEO4J_AUTH: neo4j/test
+      - NEO4J_AUTH=neo4j/test
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+      - NEO4JLABS_PLUGINS=["apoc"]
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_uuid_enabled=true
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_security_procedures_whitelist=apoc.*
+      
 
   python:
     container_name: python
@@ -19,6 +27,6 @@ services:
     tty: true
     stdin_open: true
 
-volumes:
-  neo4j-store:
-    driver: local
+# volumes:
+#   neo4j-store:
+#     driver: local
