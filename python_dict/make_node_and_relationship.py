@@ -44,7 +44,7 @@ class App:
         elif len_kwargs == 2:
             query = Template("CREATE (n1:${type} { name: '${node_name}' })").substitute(type=kwargs["type"], node_name=kwargs["node_name"])
         elif len_kwargs == 3:
-            query = Template("CREATE (n1:${type} { ${attr}: '${node_name}' })").substitute(type=kwargs["type"], attr=kwargs["attr"], node_name=kwargs["node_name"])
+            query = Template("CREATE (n1:${type} { ${attr}: '${attr_name}' })").substitute(type=kwargs["type"], attr=kwargs["attr"], attr_name=kwargs["node_name"])
         
         return query
 
@@ -67,7 +67,8 @@ class App:
             elif len(kwargs) == 3:
                 type = kwargs["type"]
                 attr = kwargs["attr"]
-                query = App.create_CREATE_query(node_name=node_name, type=type, attr=attr)
+                attr_name = kwargs["attr_name"]
+                query = App.create_CREATE_query(attr_name=attr_name, type=type, attr=attr)
             tx.run(query)
 
     @staticmethod
