@@ -55,7 +55,7 @@ class App:
         """
         node_name = kwargs["node_name"]
         already_exist_query = (
-                "MATCH (n:Node) WHERE n.name = $node_name "
+                "MATCH (n) WHERE n.name = $node_name "
                 "RETURN n"
             )
         result = tx.run(already_exist_query, node_name=node_name)
@@ -77,7 +77,7 @@ class App:
         ノード間の関係性を生成. 
         """
         query = Template(
-                "MATCH (n1:Node),(n2:Node) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' "
+                "MATCH (n1),(n2) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' "
                 "CREATE (n1)-[:${relationship}]->(n2) "
                 "RETURN n1, n2"
             )
