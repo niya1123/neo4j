@@ -17,12 +17,12 @@ class App:
         """
         self.driver.close()
 
-    def create_Node(self, node1_name, node2_name):
+    def create_Node(self, **kwargs):
         """
         ノードを作成する. 
         """
         with self.driver.session() as session:
-            session.write_transaction(self._return_node, node1_name, node2_name)
+            session.write_transaction(self._return_node, **kwargs)
 
     def create_relationship(self, node1_name, node2_name, relationship):
         """
@@ -30,13 +30,38 @@ class App:
         """
         with self.driver.session() as session:
             session.write_transaction(self._return_relationship, node1_name, node2_name, relationship)
-          
 
     @staticmethod
-    def _return_node(tx, node1_name, node2_name):
+    def create_CREATE_query(**kwargs) -> str:
+        """
+        CREATEクエリを生成する. 
+        """
+        query = ""
+        len_kwargs = len(kwargs)
+        if len_kwargs == 1:
+            query = Template("CREATE (n1:Node { name: '${node_name}' })").substitute(node_name=kwargs["node_name"])
+        elif len_kwargs == 2:
+            query = Template("CREATE (n1:${type} { name: '${node_name}' })").substitute(type=kwargs["type"], node_name=kwargs["node_name"])
+        elif len_kwargs == 3:
+            query = Template("CREATE (n1:${type} { ${attr}: '${node_name}' })").substitute(type=kwargs["type"], attr=kwargs["attr"], node_name=kwargs["node_name"])
+        
+        return query
+
+    @staticmethod
+    def _return_node(tx, **kwargs):
         """
         すでにあるノードは作成しない．
         """
+        node1_name = kwargs["node1_name"]
+        node2_name = kwargs["node2_name"]
+        if len(kwargs) == 3:
+            type = kwargs["type"]
+            tx.run(App.create_CREATE_query(node_name=node1_name, type=type))
+        elif len(kwargs) == 4:
+            type = kwargs["type"]
+            attr = kwargs["attr"]
+            tx.run(App.create_CREATE_query(node_name=node1_name, type=type, attr=attr))
+
         query_n1 = (
                 "MATCH (n1:Node) WHERE n1.name = $node1_name "
                 "RETURN n1"
@@ -48,15 +73,11 @@ class App:
         result_n1 = tx.run(query_n1, node1_name=node1_name)
         result_n2 = tx.run(query_n2, node2_name=node2_name)
         if result_n1.single() is None:
-            query = (
-                "CREATE (n1:Node { name: $node1_name }) "
-            )
-            tx.run(query, node1_name=node1_name)
+            query = App.create_CREATE_query(node_name=node1_name)
+            tx.run(query)
         if result_n2.single() is None:
-            query = (
-                "CREATE (n2:Node { name: $node2_name }) "
-            )
-            tx.run(query, node2_name=node2_name)
+            query = App.create_CREATE_query(node_name=node2_name)
+            tx.run(query)
 
     @staticmethod
     def _return_relationship(tx, node1_name, node2_name, relationship):
@@ -78,10 +99,12 @@ if __name__ == "__main__":
     user = "neo4j"
     password = "test"
     app = App(url, user, password)
-    while(True):
-        n1 = input("1つめの名前を入れて: ")
-        n2 = input("2つめの名前を入れて: ")
-        app.create_Node(n1, n2)
-        relationship = input("2ノードの関係性を入力してね: ")
-        app.create_relationship(n1, n2, relationship)
-        app.close()
+    app.create_Node(node1_name="やすお", node2_name="またたび")
+    app.create_Node(node1_name="やすお", node2_name="またたび", type="忍び")
+    # while(True):
+    #     n1 = input("1つめの名前を入れて: ")
+    #     n2 = input("2つめの名前を入れて: ")
+    #     app.create_Node(node1_name=n1, node2_name=n2)
+    #     relationship = input("2ノードの関係性を入力してね: ")
+    #     app.create_relationship(n1, n2, relationship)
+    #     app.close()
