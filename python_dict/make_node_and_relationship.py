@@ -34,6 +34,9 @@ class App:
 
     @staticmethod
     def _return_node(tx, node1_name, node2_name):
+        """
+        すでにあるノードは作成しない．
+        """
         query_n1 = (
                 "MATCH (n1:Node) WHERE n1.name = $node1_name "
                 "RETURN n1"
@@ -57,6 +60,9 @@ class App:
 
     @staticmethod
     def _return_relationship(tx, node1_name, node2_name, relationship):
+        """
+        ノード間の関係性を生成. 
+        """
         query = Template(
                 "MATCH (n1:Node),(n2:Node) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' "
                 "CREATE (n1)-[:${relationship}]->(n2) "
