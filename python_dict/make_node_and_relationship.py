@@ -19,7 +19,8 @@ class App:
 
     def create_Node(self, **kwargs):
         """
-        ノードを作成する. 
+        ノードを作成する. 作れるノードは1つまで. 
+        kwargsは{node_name: str, type: str, attr: str}が最大許容量．
         """
         with self.driver.session() as session:
             session.write_transaction(self._return_node, **kwargs)
@@ -50,33 +51,23 @@ class App:
     @staticmethod
     def _return_node(tx, **kwargs):
         """
-        すでにあるノードは作成しない．
+        ノードを作成する. すでにあるノードは作成しない．
         """
-        node1_name = kwargs["node1_name"]
-        node2_name = kwargs["node2_name"]
-        if len(kwargs) == 3:
-            type = kwargs["type"]
-            tx.run(App.create_CREATE_query(node_name=node1_name, type=type))
-        elif len(kwargs) == 4:
-            type = kwargs["type"]
-            attr = kwargs["attr"]
-            tx.run(App.create_CREATE_query(node_name=node1_name, type=type, attr=attr))
-
-        query_n1 = (
-                "MATCH (n1:Node) WHERE n1.name = $node1_name "
-                "RETURN n1"
+        node_name = kwargs["node_name"]
+        already_exist_query = (
+                "MATCH (n:Node) WHERE n.name = $node_name "
+                "RETURN n"
             )
-        query_n2 = (
-            "MATCH (n2:Node) WHERE n2.name = $node2_name "
-            "RETURN n2"
-        )
-        result_n1 = tx.run(query_n1, node1_name=node1_name)
-        result_n2 = tx.run(query_n2, node2_name=node2_name)
-        if result_n1.single() is None:
-            query = App.create_CREATE_query(node_name=node1_name)
-            tx.run(query)
-        if result_n2.single() is None:
-            query = App.create_CREATE_query(node_name=node2_name)
+        result = tx.run(already_exist_query, node_name=node_name)
+        if result.single() is None:
+            query = App.create_CREATE_query(node_name=node_name)
+            if len(kwargs) == 2:
+                type = kwargs["type"]
+                query = App.create_CREATE_query(node_name=node_name, type=type)
+            elif len(kwargs) == 3:
+                type = kwargs["type"]
+                attr = kwargs["attr"]
+                query = App.create_CREATE_query(node_name=node_name, type=type, attr=attr)
             tx.run(query)
 
     @staticmethod
@@ -99,12 +90,11 @@ if __name__ == "__main__":
     user = "neo4j"
     password = "test"
     app = App(url, user, password)
-    app.create_Node(node1_name="やすお", node2_name="またたび")
-    app.create_Node(node1_name="やすお", node2_name="またたび", type="忍び")
-    # while(True):
-    #     n1 = input("1つめの名前を入れて: ")
-    #     n2 = input("2つめの名前を入れて: ")
-    #     app.create_Node(node1_name=n1, node2_name=n2)
-    #     relationship = input("2ノードの関係性を入力してね: ")
-    #     app.create_relationship(n1, n2, relationship)
-    #     app.close()
+    while(True):
+        n1 = input("1つめの名前を入れて: ")
+        app.create_Node(node_name=n1)
+        n2 = input("2つめの名前を入れて: ")
+        app.create_Node(node_name=n2)
+        relationship = input("2ノードの関係性を入力してね: ")
+        app.create_relationship(n1, n2, relationship)
+        app.close()
