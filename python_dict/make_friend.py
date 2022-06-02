@@ -1,6 +1,7 @@
 import logging
 from neo4j import GraphDatabase
 from neo4j.exceptions import ServiceUnavailable
+from string import Template
 
 class App:
 
@@ -16,10 +17,10 @@ class App:
             # Write transactions allow the driver to handle retries and transient errors
             session.write_transaction(self._return_person, person1_name, person2_name)
 
-    def create_friendship(self, person1_name, person2_name):
+    def create_friendship(self, person1_name, person2_name, relationship):
         with self.driver.session() as session:
             # Write transactions allow the driver to handle retries and transient errors
-            session.write_transaction(self._return_friendship, person1_name, person2_name)
+            session.write_transaction(self._return_friendship, person1_name, person2_name, relationship)
           
 
     @staticmethod
@@ -52,19 +53,19 @@ class App:
             tx.run(query, person2_name=person2_name)
 
     @staticmethod
-    def _return_friendship(tx, person1_name, person2_name):
+    def _return_friendship(tx, person1_name, person2_name, relationship):
 
         # To learn more about the Cypher syntax,
         # see https://neo4j.com/docs/cypher-manual/current/
 
         # The Reference Card is also a good resource for keywords,
         # see https://neo4j.com/docs/cypher-refcard/current/
-        query = (
-                "MATCH (p1:Person),(p2:Person) WHERE p1.name = $person1_name AND p2.name = $person2_name "
-                "CREATE (p1)-[:KNOWS]->(p2) "
+        query = Template(
+                "MATCH (p1:Person),(p2:Person) WHERE p1.name = '${person1_name}' AND p2.name = '${person2_name}' "
+                "CREATE (p1)-[:${relationship}]->(p2) "
                 "RETURN p1, p2"
             )
-        tx.run(query, person1_name=person1_name, person2_name=person2_name)
+        tx.run(query.substitute(person1_name=person1_name, person2_name=person2_name, relationship=relationship))
 
 if __name__ == "__main__":
     # See https://neo4j.com/developer/aura-connect-driver/ for Aura specific connection URL.
@@ -75,6 +76,10 @@ if __name__ == "__main__":
     user = "neo4j"
     password = "test"
     app = App(url, user, password)
-    app.create_person("アスカ", "シンジ")
-    app.create_friendship("アスカ", "シンジ")
-    app.close()
+    while(True):
+        p1 = input("1人目の名前を入れて: ")
+        p2 = input("2人目の名前を入れて: ")
+        app.create_person(p1, p2)
+        relationship = input("2人の関係性を入力してね: ")
+        app.create_friendship(p1, p2, relationship)
+        app.close()
