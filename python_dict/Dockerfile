@@ -4,6 +4,6 @@ WORKDIR /dic
 
 RUN pip install --upgrade pip 
 
-# COPY ./requirements.txt /dic/requirements.txt
+COPY ./requirements.txt /dic/requirements.txt
 
-# CMD pip install -r requirements.txt 
+RUN pip install -r requirements.txt 
