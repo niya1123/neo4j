@@ -1,5 +1,7 @@
 from flask import Flask, jsonify
- 
+import sys
+sys.path.append("/dic/neo4j")
+
 app = Flask(__name__)
  
 @app.route('/')
