@@ -1,19 +1,21 @@
 from neo4j import GraphDatabase
+from connection_neo4j import ConnectNeo4j as cn
 from string import Template
 
 class App:
 
-    def __init__(self, uri, user, password):
+    def __init__(self):
         """
         コンストラクタ. GraphDatabaseのdriveの生成を行う. 
         """
-        self.driver = GraphDatabase.driver(uri, auth=(user, password))
+        self.cn = cn()
+        self.driver = self.cn.driver
 
     def close(self):
         """
         driverを閉じる. 
         """
-        self.driver.close()
+        self.cn.close()
 
     def create_Node(self, **kwargs):
         """
@@ -80,20 +82,3 @@ class App:
                 "RETURN n1, n2"
             )
         tx.run(query.substitute(node1_name=node1_name, node2_name=node2_name, relationship=relationship))
-
-if __name__ == "__main__":
-    scheme = "neo4j"
-    host_name = "neo4j"
-    port = 7687
-    url = "{scheme}://{host_name}:{port}".format(scheme=scheme, host_name=host_name, port=port)
-    user = "neo4j"
-    password = "test"
-    app = App(url, user, password)
-    while(True):
-        n1 = input("1つめの名前を入れて: ")
-        app.create_Node(node_name=n1)
-        n2 = input("2つめの名前を入れて: ")
-        app.create_Node(node_name=n2)
-        relationship = input("2ノードの関係性を入力してね: ")
-        app.create_relationship(n1, n2, relationship)
-        app.close()

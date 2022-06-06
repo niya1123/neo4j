@@ -1,12 +1,6 @@
-from python_dict.create_node_and_relationship import App
+from create_node_and_relationship import App
 
-scheme = "neo4j"
-host_name = "neo4j"
-port = 7687
-url = "{scheme}://{host_name}:{port}".format(scheme=scheme, host_name=host_name, port=port)
-user = "neo4j"
-password = "test"
-app = App(url, user, password)
+app = App()
 app.create_Node(node_name="シンジ", type="パイロット")
 app.create_Node(node_name="アスカ", type="パイロット")
 app.create_Node(node_name="カオル", type="ゼーレ")
