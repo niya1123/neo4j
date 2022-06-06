@@ -1,4 +1,4 @@
-from create_node_and_relationship import App
+from python_dict.neo4j.create_node_and_relationship import App
 
 app = App()
 app.create_Node(node_name="シンジ", type="パイロット")
