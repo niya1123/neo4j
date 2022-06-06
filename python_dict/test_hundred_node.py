@@ -1,4 +1,4 @@
-from make_node_and_relationship import App
+from python_dict.create_node_and_relationship import App
 
 scheme = "neo4j"
 host_name = "neo4j"
