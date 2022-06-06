@@ -1,7 +1,7 @@
 from string import Template
 
 from connection_neo4j import ConnectNeo4j as cn
-from neo4j import GraphDatabase
+from create_MATCH_query import CreateMATCHQuery as cmq
 
 
 class CreateNodeAndRelationship:
@@ -56,10 +56,7 @@ class CreateNodeAndRelationship:
         ノードを作成する. すでにあるノードは作成しない．
         """
         node_name = kwargs["node_name"]
-        already_exist_query = (
-                "MATCH (n) WHERE n.name = $node_name "
-                "RETURN n"
-            )
+        already_exist_query = cmq._create_MATCH_query(node_name=node_name)
         result = tx.run(already_exist_query, node_name=node_name)
         if result.single() is None:
             query = CreateNodeAndRelationship._create_CREATE_query(node_name=node_name)
@@ -78,9 +75,8 @@ class CreateNodeAndRelationship:
         """
         ノード間の関係性を生成. 
         """
-        query = Template(
-                "MATCH (n1),(n2) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' "
+        query = cmq._create_MATCH_query(node1_name=node1_name, node2_name=node2_name) + Template(
                 "CREATE (n1)-[:${relationship}]->(n2) "
                 "RETURN n1, n2"
-            )
-        tx.run(query.substitute(node1_name=node1_name, node2_name=node2_name, relationship=relationship))
+            ).substitute(relationship=relationship)
+        tx.run(query)
