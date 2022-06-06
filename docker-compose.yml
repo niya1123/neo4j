@@ -22,6 +22,8 @@ services:
   python:
     container_name: python
     build: ./python_dict
+    ports:
+      - 7878:7878
     volumes: 
       - ./python_dict:/dic
     tty: true
