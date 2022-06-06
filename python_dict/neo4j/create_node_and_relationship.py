@@ -1,12 +1,14 @@
-from neo4j import GraphDatabase
-from connection_neo4j import ConnectNeo4j as cn
 from string import Template
 
-class App:
+from connection_neo4j import ConnectNeo4j as cn
+from neo4j import GraphDatabase
+
+
+class CreateNodeAndRelationship:
 
     def __init__(self):
         """
-        コンストラクタ. GraphDatabaseのdriveの生成を行う. 
+        コンストラクタ. GraphDatabaseのdriverの生成を行う. 
         """
         self.cn = cn()
         self.driver = self.cn.driver
@@ -33,7 +35,7 @@ class App:
             session.write_transaction(self._return_relationship, node1_name, node2_name, relationship)
 
     @staticmethod
-    def create_CREATE_query(**kwargs) -> str:
+    def _create_CREATE_query(**kwargs) -> str:
         """
         CREATEクエリを生成する. 
         """
@@ -60,15 +62,15 @@ class App:
             )
         result = tx.run(already_exist_query, node_name=node_name)
         if result.single() is None:
-            query = App.create_CREATE_query(node_name=node_name)
+            query = CreateNodeAndRelationship._create_CREATE_query(node_name=node_name)
             if len(kwargs) == 2:
                 type = kwargs["type"]
-                query = App.create_CREATE_query(node_name=node_name, type=type)
+                query = CreateNodeAndRelationship._create_CREATE_query(node_name=node_name, type=type)
             elif len(kwargs) == 3:
                 type = kwargs["type"]
                 attr = kwargs["attr"]
                 attr_name = kwargs["attr_name"]
-                query = App.create_CREATE_query(attr_name=attr_name, type=type, attr=attr)
+                query = CreateNodeAndRelationship._create_CREATE_query(attr_name=attr_name, type=type, attr=attr)
             tx.run(query)
 
     @staticmethod

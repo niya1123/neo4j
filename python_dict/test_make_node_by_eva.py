@@ -1,9 +1,9 @@
 import sys
 sys.path.append("/dic/neo4j")
 
-from create_node_and_relationship import App
+from create_node_and_relationship import CreateNodeAndRelationship
 
-app = App()
+app = CreateNodeAndRelationship()
 app.create_Node(node_name="シンジ", type="パイロット")
 app.create_Node(node_name="アスカ", type="パイロット")
 app.create_Node(node_name="カオル", type="ゼーレ")
