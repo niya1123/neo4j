@@ -1,21 +1,17 @@
 from string import Template
 
-from connection_neo4j import ConnectNeo4j as cn
-
-
 class CreateMATCHQuery:
-    def __init__(self):
+    def __init__(self, driver):
         """
-        コンストラクタ. GraphDatabaseのdriverの生成を行う. 
+        コンストラクタ. GraphDatabaseのdriverを受け取りdriverを作成する. 
         """
-        self.cn = cn()
-        self.driver = self.cn.driver
+        self.driver = driver
 
     def close(self):
         """
         driverを閉じる. 
         """
-        self.cn.close()
+        self.driver.close()
 
     def run_MATCH_query(self, **kwargs):
         """
@@ -31,8 +27,9 @@ class CreateMATCHQuery:
         """
         query = ""
         len_kwargs = len(kwargs)
-
-        if len_kwargs == 1:
+        if len_kwargs == 0:
+            query = "MATCH (n)-[rel]->(a) RETURN n, rel, a"
+        elif len_kwargs == 1:
             query = Template(
                 "MATCH (n) WHERE n.name = '${node_name}' "
                 "RETURN n"

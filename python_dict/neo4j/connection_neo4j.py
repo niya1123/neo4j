@@ -19,3 +19,9 @@ class ConnectNeo4j:
         driverを閉じる. 
         """
         self.driver.close()
+
+    def get_session(self):
+        """
+        セッションのゲッター. 
+        """
+        return self.driver.session()
