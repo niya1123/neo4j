@@ -1,7 +1,5 @@
 import sys
-
 sys.path.append("/dic/neo4j")
-print(sys.path)
 
 from create_node_and_relationship import App
 
