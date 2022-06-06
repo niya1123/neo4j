@@ -1,4 +1,9 @@
-from python_dict.neo4j.create_node_and_relationship import App
+import sys
+
+sys.path.append("/dic/neo4j")
+print(sys.path)
+
+from create_node_and_relationship import App
 
 app = App()
 app.create_Node(node_name="シンジ", type="パイロット")

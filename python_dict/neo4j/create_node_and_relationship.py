@@ -1,5 +1,5 @@
 from neo4j import GraphDatabase
-from python_dict.neo4j.connection_neo4j import ConnectNeo4j as cn
+from connection_neo4j import ConnectNeo4j as cn
 from string import Template
 
 class App:
