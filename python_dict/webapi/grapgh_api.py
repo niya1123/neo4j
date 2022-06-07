@@ -10,11 +10,11 @@ app.config['JSON_AS_ASCII'] = False
 cn = cn()
 session = cn.get_session()
  
-# @app.route('/')
-# def hello_world():
-#     return jsonify({'message': 'Hello world'})
+@app.route('/')
+def hello_world():
+    return jsonify({'message': 'Hello world'})
 
-@app.route('/', methods=["GET"])
+@app.route('/get/all_graphs', methods=["GET"])
 def get_all_graph():
     result = session.run(cmq._create_MATCH_query())
     data = [record.data()['rel'] for record in result]
