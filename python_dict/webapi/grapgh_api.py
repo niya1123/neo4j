@@ -1,5 +1,3 @@
-from crypt import methods
-from email import message
 import sys
 
 sys.path.append("/dic/neo4j")
@@ -8,6 +6,7 @@ import json
 from connection_neo4j import ConnectNeo4j as CN
 from create_MATCH_query import CreateMATCHQuery as CMQ
 from create_node_and_relationship import CreateNodeAndRelationship as CNAR
+from create_DELETE_query import CreateDELETEQuery as CDQ
 from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
@@ -52,7 +51,6 @@ def post_node_and_relationship():
     session = cn.get_session()
     result =session.run(CMQ._create_MATCH_query(node1_name=node1, node2_name=node2, relationship=relationship))
     res = return_json(result)
-    print(res)
     cn.close()
     return  jsonify(res)
 
@@ -62,6 +60,20 @@ def get_node_and_relationship():
     node2 = request.args.get("node2")
     relationship = request.args.get("relationship")
     return render_template("result.html", message="{}と{}は{}という関係を持ちます. ".format(node1, node2, relationship))
+
+@app.route('/delete/<string:node_name>', methods=["GET"])
+def delete_node(node_name):
+    cdq = CDQ(CN().driver)
+    cdq.run_DELETE(node_name=node_name)
+    cdq.close()
+    return "{}を削除しました.".format(node_name)
+
+@app.route('/delete/all', methods=["GET"])
+def delete_all_node():
+    cdq = CDQ(CN().driver)
+    cdq.run_DELETE()
+    cdq.close()
+    return "すべてのノードを削除しました"
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7878, debug=True)
