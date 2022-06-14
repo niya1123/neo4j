@@ -8,18 +8,7 @@
 </head>
 <body>
   <!-- 3 setup a container element -->
-  <div id="jstree">
-    <!-- in this example the tree is populated from inline HTML -->
-    <ul>
-      <li>Root node 1
-        <ul>
-          <li id="child_node_1">Child node 1</li>
-          <li>Child node 2</li>
-        </ul>
-      </li>
-      <li>Root node 2</li>
-    </ul>
-  </div>
+  <div id="jstree"></div>
   <button>demo button</button>
 
   <!-- 4 include the jQuery library -->
@@ -27,18 +16,53 @@
   <!-- 5 include the minified jstree source -->
   <script src="{{ url_for('static', filename='dist/jstree.min.js') }}"></script>
   <script>
+    function demo_create() {
+        var ref = $('#jstree').jstree(true),
+            sel = ref.get_selected();
+        if(!sel.length) { return false; }
+        sel = sel[0];
+        sel = ref.create_node(sel, {"type":"file"});
+        if(sel) {
+            ref.edit(sel);
+        }
+    };
+    function demo_rename() {
+        var ref = $('#jstree').jstree(true),
+            sel = ref.get_selected();
+        if(!sel.length) { return false; }
+        sel = sel[0];
+        ref.edit(sel);
+    };
+    function demo_delete() {
+        var ref = $('#jstree').jstree(true),
+            sel = ref.get_selected();
+        if(!sel.length) { return false; }
+        ref.delete_node(sel);
+    };
   $(function () {
     // 6 create an instance when the DOM is ready
-    $('#jstree').jstree();
+    $('#jstree').jstree({
+        "core" : {
+            "animation" : 0,
+            "check_callback" : true,
+            'force_text' : true,
+            'data': { "id" : "ajson1", "parent" : "#", "text" : "Simple root node" }
+        },
+        "types" : {
+                    "#" : { "max_children" : 1, "max_depth" : 4, "valid_children" : ["root"] },
+                    "root" : { "valid_children" : ["default"] },
+                    "default" : { "valid_children" : ["default","file"] },
+                    "file" : { "valid_children" : [] }
+                },
+        "plugins" : ["search", "state", "types", "wholerow", "contextmenu", "dnd"]
+    });
     // 7 bind to events triggered on the tree
     $('#jstree').on("changed.jstree", function (e, data) {
       console.log(data.selected);
     });
     // 8 interact with the tree - either way is OK
     $('button').on('click', function () {
-      $('#jstree').jstree(true).select_node('child_node_1');
-      $('#jstree').jstree('select_node', 'child_node_1');
-      $.jstree.reference('#jstree').select_node('child_node_1');
+        alert("button on!");
     });
   });
   </script>
