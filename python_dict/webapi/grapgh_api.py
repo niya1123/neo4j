@@ -75,5 +75,9 @@ def delete_all_node():
     cdq.close()
     return "すべてのノードを削除しました"
 
+@app.route('/create/json', methods=["GET"])
+def create_json():
+    return render_template("create_json.html")
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7878, debug=True)

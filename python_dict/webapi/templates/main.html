@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
    <title>test_flask</title>
 </head>
-<body >
+<body>
     <form action='/post/create_node_and_relationship'>
         <p>ノード2つの名前とその関係性1つを入力してください</p>
         node1: <input type="text" name="node1">
@@ -12,5 +12,8 @@
         relationship: <input type="text" name="relationship">
         <button type="submit" formmethod="POST">送信</button>
     </form>
+    <a href="/delete/all">ノード全削除</a>
+    <a href="/get/all_graphs">ノード全返却</a>
+    <a href="/create/json">json作成</a>
 </body>
 </html>
