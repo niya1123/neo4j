@@ -8,10 +8,11 @@
 </head>
 <body>
   <!-- 3 setup a container element -->
-    <div id="jstree"></div>
-    <button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i> ノード作成</button>
-    <button type="button" class="btn btn-warning btn-sm" onclick="demo_rename();"><i class="glyphicon glyphicon-pencil"></i> Rename</button>
-    <button type="button" class="btn btn-danger btn-sm" onclick="demo_delete();"><i class="glyphicon glyphicon-remove"></i> Delete</button>
+    <!-- <button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i>ノード作成</button>
+    <button type="button" class="btn btn-warning btn-sm" onclick="demo_rename();"><i class="glyphicon glyphicon-pencil"></i>名称変更</button>
+    <button type="button" class="btn btn-danger btn-sm" onclick="demo_delete();"><i class="glyphicon glyphicon-remove"></i>ノード削除</button> -->
+    <button type="button" onclick="get_json();">json作成</button>
+    <div id="jstree" ></div>
 
   <!-- 4 include the jQuery library -->
   <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -41,6 +42,12 @@
         if(!sel.length) { return false; }
         ref.delete_node(sel);
     };
+    function get_json(){
+        var ref = $('#jstree').jstree(true),
+            sel = ref.get_json('#', { 'flat': true });
+        if(!sel.length) { return false; }
+        console.log(JSON.stringify(sel, null, " ") );
+    };
   $(function () {
     // 6 create an instance when the DOM is ready
     $('#jstree').jstree({
@@ -48,10 +55,10 @@
             "animation" : 0,
             "check_callback" : true,
             'force_text' : true,
-            'data': { "id" : "1", "parent" : "#", "text" : "Simple root node" }
+            'data': { "id" : "p", "parent" : "#", "text" : "初期ノード" }
         },
         "types" : {
-                    "#" : { "max_children" : 1, "max_depth" : 4, "valid_children" : ["root"] },
+                    "#" : { "max_children" : 1, "max_depth" : 5, "valid_children" : ["root"] },
                     "root" : { "valid_children" : ["default"] },
                     "default" : { "valid_children" : ["default","file"] },
                     "file" : { "valid_children" : [] }
@@ -59,9 +66,9 @@
         "plugins" : ["search", "state", "types", "wholerow", "contextmenu", "dnd"]
     });
     // 7 bind to events triggered on the tree
-    $('#jstree').on("changed.jstree", function (e, data) {
-      console.log(data.selected);
-    });
+    // $('#jstree').on("changed.jstree", function (e, data) {
+    //   console.log(data.selected);
+    // });
     // 8 interact with the tree - either way is OK
     // $('button').on('click', function () {
     //     alert("button on!");
