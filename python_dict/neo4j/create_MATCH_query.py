@@ -35,7 +35,17 @@ class CreateMATCHQuery:
                 "RETURN n"
                 ).substitute(node_name=kwargs["node_name"])
         elif len_kwargs == 2:
+            try:
+                type = kwargs["type"]
+                query = Template(
+                    "MATCH (n: ${type}) WHERE n.name = '${node_name}' RETURN n"
+                ).substitute(node_name=kwargs["node_name"], type=type)
+            except KeyError:
+                query = Template(
+                    "MATCH (n1),(n2) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' "
+                ).substitute(node1_name=kwargs["node1_name"], node2_name=kwargs["node2_name"])
+        elif len_kwargs == 3:
             query = Template(
-                "MATCH (n1),(n2) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' "
-            ).substitute(node1_name=kwargs["node1_name"], node2_name=kwargs["node2_name"])
+                "MATCH (n1)-[rel]->(n2) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' RETURN n1,rel,n2"
+            ).substitute(node1_name=kwargs["node1_name"], node2_name=kwargs["node2_name"], relationship=kwargs["relationship"])
         return query
