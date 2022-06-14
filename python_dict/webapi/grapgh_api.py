@@ -39,9 +39,15 @@ def get_all_graph():
 
 @app.route('/post/create_node_and_relationship', methods=["POST"])
 def post_node_and_relationship():
-    node1 = request.form["node1"]
-    node2 = request.form["node2"]
-    relationship = request.form["relationship"]
+    if request.headers['Content-Type'] != 'application/json':
+        print(request.headers['Content-Type'])
+        return jsonify(res='error'), 400
+
+    print (request.json)
+
+    return jsonify(res='ok')
+
+def create_node_and_relationship(node1, node2, relationship):
     cnar = CNAR()
     cnar.create_Node(node_name=node1)
     cnar.create_Node(node_name=node2)
@@ -49,17 +55,17 @@ def post_node_and_relationship():
     cnar.close()
     cn = CN()
     session = cn.get_session()
-    result =session.run(CMQ._create_MATCH_query(node1_name=node1, node2_name=node2, relationship=relationship))
+    result = session.run(CMQ._create_MATCH_query(node1_name=node1, node2_name=node2, relationship=relationship))
     res = return_json(result)
     cn.close()
     return  jsonify(res)
 
-@app.route('/post/create_node_and_relationship', methods=["GET"])
-def get_node_and_relationship():
-    node1 = request.args.get("node1")
-    node2 = request.args.get("node2")
-    relationship = request.args.get("relationship")
-    return render_template("result.html", message="{}と{}は{}という関係を持ちます. ".format(node1, node2, relationship))
+# @app.route('/post/create_node_and_relationship', methods=["GET"])
+# def get_node_and_relationship():
+#     node1 = request.args.get("node1")
+#     node2 = request.args.get("node2")
+#     relationship = request.args.get("relationship")
+#     return render_template("result.html", message="{}と{}は{}という関係を持ちます. ".format(node1, node2, relationship))
 
 @app.route('/delete/<string:node_name>', methods=["GET"])
 def delete_node(node_name):

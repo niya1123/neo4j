@@ -46,7 +46,21 @@
         var ref = $('#jstree').jstree(true),
             sel = ref.get_json('#', { 'flat': true });
         if(!sel.length) { return false; }
-        console.log(JSON.stringify(sel, null, " ") );
+        $.ajax(
+            {
+                url:'/post/create_node_and_relationship',
+                type:'POST',
+                data: JSON.stringify(sel, null, " "),
+                dataType: 'json',
+                contentType: 'application/json'
+            })
+            .done(function(data, textStatus, jqXHR ){
+                    console.log("done");
+                    console.log(data);
+                })
+            .fail(function(jqXHR, textStatus, errorThrown){
+                    console.log("failed");
+                });;
     };
   $(function () {
     // 6 create an instance when the DOM is ready
