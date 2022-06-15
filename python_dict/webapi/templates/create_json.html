@@ -64,15 +64,19 @@
     };
   $(function () {
     // 6 create an instance when the DOM is ready
+    var data = [{ "id" : "type", "parent" : "#", "text" : "初期属性" },
+                { "id" : "parent", "parent" : "type", "text" : "初期親ノード"},
+                { "id" : "child", "parent" : "parent", "text" : "初期子ノード"},
+               ]
     $('#jstree').jstree({
         "core" : {
             "animation" : 0,
             "check_callback" : true,
             'force_text' : true,
-            'data': { "id" : "p", "parent" : "#", "text" : "初期ノード" }
+            'data':data
         },
         "types" : {
-                    "#" : { "max_children" : 1, "max_depth" : 5, "valid_children" : ["root"] },
+                    "#" : { "max_children" : 1, "max_depth" : 3, "valid_children" : ["root"] },
                     "root" : { "valid_children" : ["default"] },
                     "default" : { "valid_children" : ["default","file"] },
                     "file" : { "valid_children" : [] }
