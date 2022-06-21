@@ -42,6 +42,27 @@ def main_post():
     cn.close()
     return  jsonify(res)
 
+@app.route('/create/score', methods=["GET"])
+def create_score():
+    return render_template("score.html")
+
+@app.route('/create/score', methods=["POST"])
+def post_create_score():
+    node1 = request.form["node1"]
+    node2 = request.form["node2"]
+    score = request.form["score"]
+    cnar = CNAR()
+    cnar.create_Node(node_name=node1)
+    cnar.create_Node(node_name=node2)
+    cnar.create_score(node1, node2, score)
+    cnar.close()
+    # cn = CN()
+    # session = cn.get_session()
+    # result =session.run(CMQ._create_MATCH_query(node1_name=node1, node2_name=node2, relationship=relationship))
+    # res = return_json(result)
+    # cn.close()
+    return  "登録しました"
+
 @app.route('/get/all_graphs', methods=["GET"])
 def get_all_graph():
     """

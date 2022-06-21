@@ -34,6 +34,10 @@ class CreateNodeAndRelationship:
         with self.driver.session() as session:
             session.write_transaction(self._return_relationship, node1_name, node2_name, relationship)
 
+    def create_score(self, node1_name, node2_name, score):
+        with self.driver.session() as session:
+            session.write_transaction(self._return_score, node1_name, node2_name, score)
+    
     @staticmethod
     def _create_CREATE_query(**kwargs) -> str:
         """
@@ -79,4 +83,16 @@ class CreateNodeAndRelationship:
                 "CREATE (n1)-[:${relationship}]->(n2) "
                 "RETURN n1, n2"
             ).substitute(relationship=relationship)
+        tx.run(query)
+
+    @staticmethod
+    def _return_score(tx, node1_name, node2_name, score):
+        """
+        ノード間の関係性を生成. 
+        """
+        query = Template(
+                "MATCH (n1),(n2) WHERE n1.name='${node1_name}' AND n2.name='${node2_name}' "
+                "CREATE (n1)-[:score{ score: ${score} }]->(n2) "
+                "RETURN n1, n2"
+            ).substitute(node1_name=node1_name, node2_name=node2_name, score=score)
         tx.run(query)

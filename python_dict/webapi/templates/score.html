@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+   <title>test_flask</title>
+</head>
+<body>
+    <form action='/create/score'>
+        <p>自分の名前と回答した問題のテーマと問題の得点を入力してください</p>
+        名前: <input type="text" name="node1">
+        問題テーマ: <input type="text" name="node2">
+        得点: <input type="text" name="score">
+        <button type="submit" formmethod="POST">送信</button>
+    </form>
+    <a href="/">ホーム</a>
+</body>
+</html>
