@@ -56,11 +56,6 @@ def post_create_score():
     cnar.create_Node(node_name=node2)
     cnar.create_score(node1, node2, score)
     cnar.close()
-    # cn = CN()
-    # session = cn.get_session()
-    # result =session.run(CMQ._create_MATCH_query(node1_name=node1, node2_name=node2, relationship=relationship))
-    # res = return_json(result)
-    # cn.close()
     return  "登録しました"
 
 @app.route('/get/all_graphs', methods=["GET"])
@@ -149,6 +144,16 @@ def create_json():
 @app.route('/cytoscape', methods=["GET"])
 def cytoscape():
     return render_template("cytoscape.html")
+
+@app.route('/get/score', methods=["GET"])
+def get_score():
+    cn = CN()
+    cmq = CMQ(cn.driver)
+    query = cmq._create_MATCH_score_query()
+    result = cn.get_session().run(query)
+    res = return_json(result)
+    cn.close()
+    return jsonify(res)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7878, debug=True)

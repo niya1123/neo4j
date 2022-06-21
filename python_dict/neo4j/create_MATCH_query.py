@@ -19,6 +19,10 @@ class CreateMATCHQuery:
         """
         with self.driver.session() as session:
             session.write_transaction(self._create_MATCH_query, **kwargs)
+    
+    def run_MATCH_score_query(self, **kwargs):
+        with self.driver.session() as session:
+            session.write_transaction(self._create_MATCH_score_query, **kwargs)
 
     @staticmethod
     def _create_MATCH_query(**kwargs) -> str:
@@ -49,3 +53,7 @@ class CreateMATCHQuery:
                 "MATCH (n1)-[rel]->(n2) WHERE n1.name = '${node1_name}' AND n2.name = '${node2_name}' RETURN n1,rel,n2"
             ).substitute(node1_name=kwargs["node1_name"], node2_name=kwargs["node2_name"], relationship=kwargs["relationship"])
         return query
+
+    @staticmethod
+    def _create_MATCH_score_query() -> str:
+        return "MATCH (n)-[:score]->(m) RETURN n,m"
