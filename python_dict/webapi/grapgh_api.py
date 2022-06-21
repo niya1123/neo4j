@@ -114,5 +114,9 @@ def delete_all_node():
 def create_json():
     return render_template("create_json.html")
 
+@app.route('/cytoscape', methods=["GET"])
+def cytoscape():
+    return render_template("cytoscape.html")
+
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7878, debug=True)
