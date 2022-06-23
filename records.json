@@ -1,331 +1,408 @@
 ﻿[
   {
-    "a": {
-"identity": 74,
+    "n": {
+"identity": 78,
 "labels": [
-        "Person"
+        "テクノロジ系"
       ],
 "properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 88,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "In every life there comes a time when that thing you dream becomes that thing you do",
-"title": "That Thing You Do",
-"released": 1996
-      }
-    },
-    "d": {
-"identity": 74,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1956,
-"name": "Tom Hanks"
+"name": "離散数学"
       }
     }
   },
   {
-    "a": {
-"identity": 74,
+    "n": {
+"identity": 79,
 "labels": [
-        "Person"
+        "テクノロジ系"
       ],
 "properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 164,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "This Holiday Season... Believe",
-"title": "The Polar Express",
-"released": 2004
-      }
-    },
-    "d": {
-"identity": 154,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1951,
-"name": "Robert Zemeckis"
+"name": "基数変換"
       }
     }
   },
   {
-    "a": {
-"identity": 74,
+    "n": {
+"identity": 80,
 "labels": [
-        "Person"
+        "テクノロジ系"
       ],
 "properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 114,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "Break The Codes",
-"title": "The Da Vinci Code",
-"released": 2006
-      }
-    },
-    "d": {
-"identity": 118,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1954,
-"name": "Ron Howard"
+"name": "ハッシュ法"
       }
     }
   },
   {
-    "a": {
-"identity": 74,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 165,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "Once in a lifetime you get a chance to do something different.",
-"title": "A League of Their Own",
-"released": 1992
-      }
-    },
-    "d": {
-"identity": 169,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1943,
-"name": "Penny Marshall"
-      }
-    }
-  },
-  {
-    "a": {
-"identity": 74,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 76,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "What if someone you never met, someone you never saw, someone you never knew was the only someone for you?",
-"title": "Sleepless in Seattle",
-"released": 1993
-      }
-    },
-    "d": {
-"identity": 75,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1941,
-"name": "Nora Ephron"
-      }
-    }
-  },
-  {
-    "a": {
-"identity": 74,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 133,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "Walk a mile you'll never forget.",
-"title": "The Green Mile",
-"released": 1999
-      }
-    },
-    "d": {
-"identity": 139,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1959,
-"name": "Frank Darabont"
-      }
-    }
-  },
-  {
-    "a": {
-"identity": 74,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 70,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "At odds in life... in love on-line.",
-"title": "You've Got Mail",
-"released": 1998
-      }
-    },
-    "d": {
-"identity": 75,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1941,
-"name": "Nora Ephron"
-      }
-    }
-  },
-  {
-    "a": {
-"identity": 74,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
+    "n": {
 "identity": 81,
 "labels": [
-        "Movie"
+        "テクノロジ系"
       ],
 "properties": {
-"tagline": "A story of love, lava and burning desire.",
-"title": "Joe Versus the Volcano",
-"released": 1990
+"name": "データ構造"
       }
-    },
-    "d": {
+    }
+  },
+  {
+    "n": {
 "identity": 82,
 "labels": [
-        "Person"
+        "テクノロジ系"
       ],
 "properties": {
-"born": 1950,
-"name": "John Patrick Stanley"
+"name": "スタックの利用が適する処理はどれか"
       }
     }
   },
   {
-    "a": {
-"identity": 74,
+    "n": {
+"identity": 83,
 "labels": [
-        "Person"
+        "テクノロジ系"
       ],
 "properties": {
-"born": 1956,
-"name": "Tom Hanks"
-      }
-    },
-    "m": {
-"identity": 153,
-"labels": [
-        "Movie"
-      ],
-"properties": {
-"tagline": "At the edge of the world, his journey begins.",
-"title": "Cast Away",
-"released": 2000
-      }
-    },
-    "d": {
-"identity": 154,
-"labels": [
-        "Person"
-      ],
-"properties": {
-"born": 1951,
-"name": "Robert Zemeckis"
+"name": "アルゴリズム"
       }
     }
   },
   {
-    "a": {
-"identity": 74,
+    "n": {
+"identity": 84,
 "labels": [
-        "Person"
+        "テクノロジ系"
       ],
 "properties": {
-"born": 1956,
-"name": "Tom Hanks"
+"name": "２分探索法"
       }
-    },
-    "m": {
+    }
+  },
+  {
+    "n": {
+"identity": 85,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "再帰関数"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 86,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "通信プロトコル"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 87,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "ウェルノウンポート番号"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 88,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "保守・廃棄"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 89,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "リグレッション（退行）テスト"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 90,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "シフト演算"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 91,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "固定小数点表示"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 92,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "応用数学"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 93,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "連立一次方程式の計算時間"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 94,
+"labels": [
+        "テクノロジ系"
+      ],
+"properties": {
+"name": "単語表を再構成する流れ図"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 95,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "プロジェクトの時間"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 96,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "アローダイアグラム"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 97,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "プロジェクトのコスト"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 98,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "ファンクションポイント法"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 99,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "サービスの運用"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 100,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "アプリケーション保守作業"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 101,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "ローカルサービスデスク"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 102,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "システム監査"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 103,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "システム設計の監査項目"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 104,
+"labels": [
+        "マネジメント系"
+      ],
+"properties": {
+"name": "プログラミングの監査"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 105,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "情報システム戦略"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 106,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "エンタープライズアーキテクチャ"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 107,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "UML"
+      }
+    }
+  },
+  {
+    "n": {
 "identity": 108,
 "labels": [
-        "Movie"
+        "ストラテジ系"
       ],
 "properties": {
-"tagline": "Everything is connected",
-"title": "Cloud Atlas",
-"released": 2012
+"name": "マーケティング"
       }
-    },
-    "d": {
-"identity": 9,
+    }
+  },
+  {
+    "n": {
+"identity": 109,
 "labels": [
-        "Person"
+        "ストラテジ系"
       ],
 "properties": {
-"born": 1965,
-"name": "Lana Wachowski"
+"name": "マーケティングミックス"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 110,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "新規顧客数の試算"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 111,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "会計・財務"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 112,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "減価償却"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 113,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "必要売上高の算定"
+      }
+    }
+  },
+  {
+    "n": {
+"identity": 114,
+"labels": [
+        "ストラテジ系"
+      ],
+"properties": {
+"name": "企業の財政状況を表す財務諸表"
       }
     }
   }
