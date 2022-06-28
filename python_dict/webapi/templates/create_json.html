@@ -11,6 +11,15 @@
     <!-- <button type="button" class="btn btn-success btn-sm" onclick="demo_create();"><i class="glyphicon glyphicon-asterisk"></i>ノード作成</button>
     <button type="button" class="btn btn-warning btn-sm" onclick="demo_rename();"><i class="glyphicon glyphicon-pencil"></i>名称変更</button>
     <button type="button" class="btn btn-danger btn-sm" onclick="demo_delete();"><i class="glyphicon glyphicon-remove"></i>ノード削除</button> -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
     <button type="button" onclick="get_json();">json作成</button>
     <div id="jstree" ></div>
 
@@ -48,17 +57,19 @@
         if(!sel.length) { return false; }
         $.ajax(
             {
-                url:'/post/create_node_and_relationship',
+                url:'/create/json',
                 type:'POST',
                 data: JSON.stringify(sel, null, " "),
                 dataType: 'json',
                 contentType: 'application/json'
             })
             .done(function(data, textStatus, jqXHR ){
+                    alert('登録完了しました');
                     console.log("done");
                     console.log(data);
                 })
             .fail(function(jqXHR, textStatus, errorThrown){
+                    alert('登録できませんでした');
                     console.log("failed");
                 });;
     };

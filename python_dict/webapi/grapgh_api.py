@@ -70,7 +70,7 @@ def get_all_graph():
     cn.close()
     return jsonify(res)
 
-@app.route('/post/create_node_and_relationship', methods=["POST"])
+@app.route('/create/json', methods=["POST"])
 def post_node_and_relationship():
     if request.headers['Content-Type'] != 'application/json':
         print(request.headers['Content-Type'])
@@ -95,6 +95,7 @@ def post_node_and_relationship():
         node1, node2 = tuple(filter(None, r.split('-')))
         relationship = 'have'
         create_node_and_relationship_with_type(node1, node2, relationship, type)
+   
     return jsonify(res='ok')
 
 def create_node_and_relationship(node1, node2, relationship):

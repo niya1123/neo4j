@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Tutorial 1: Getting Started</title>
+    <title>cytoscape</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.2.19/cytoscape.js"></script>
 </head>
@@ -26,14 +26,23 @@
         elements: [
           { data: { id: 'a' } },
           { data: { id: 'b' } },
-          {
-            data: {
-              id: 'ab',
-              source: 'a',
-              target: 'b'
-            }
-          }]
+          { data: { id: 'c' } },
+          { data: { id: 'd' } },
+          { data: { id: 'e' } },
+          { data: { id: 'f' } },
+          { data: { id: 'g' } },
+          { data: { id: 'h' } },
+          { data: { id: 'i' } },
+          { data: { id: 'j' } }
+          ]
       });
+    cy.on('click', 'node', function(evt){
+      console.log( 'clicked ' + this.id() );
+    });
+    cy.on('tap', 'edge', function(evt){
+      console.log( 'clicked ' + this.id() );
+      this.remove();
+    });
     </script>
 </body>
 </html>
