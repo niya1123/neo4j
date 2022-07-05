@@ -1,0 +1,44 @@
+var data_json;
+let parent;
+let children;
+let relationship;
+$.ajax({
+    url: '/get/all_graphs',
+    type: 'GET',
+    dataType: 'json',
+    async: false,
+})
+.done(function (data) {
+    const data_stringify = JSON.stringify(data);
+    data_json = JSON.parse(data_stringify);
+    parent = data_json['parent'];
+    children = data_json['children'];
+    relationship = data_json['relationship'];
+})
+.fail(function (data) {
+    console.log('error');
+});
+let elements_list = [];
+$.each(parent,function(index,p){
+    elements_list.push({data: {id: 'p'+index, ele: p}});
+});
+$.each(children,function(index,c){
+    elements_list.push({data: {id: 'c'+index, ele: c}});
+});
+
+
+
+
+      <script src="{{ url_for('static', filename='dist/edge.js') }}"></script>
+
+
+
+
+      cy.on('click', 'node', function(evt){
+        alert(this.data('ele')+"です");
+        console.log( 'clicked ' + this.id() + ' ' + this.data('ele'));
+      });
+      cy.on('tap', 'edge', function(evt){
+        console.log( 'clicked ' + this.id() );
+        this.remove();
+      });
