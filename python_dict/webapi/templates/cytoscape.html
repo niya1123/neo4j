@@ -172,9 +172,32 @@
 
           elements: elements_list
         });
-        cy.on('click', 'node', function(evt){
+        cy.on('dbltap', 'node', function(evt){
           alert(this.data('ele')+"です");
           console.log( 'clicked ' + this.id() + ' ' + this.data('ele'));
+        });
+        let count = 0;
+        cy.on('taphold', 'node', function(evt){
+          switch (count) {
+            case 0:
+              this.style('background-color', 'green');
+              count++;
+              break;
+            case 1:
+              this.style('background-color', 'gold');
+              count++;
+            break;
+            case 2:
+              this.style('background-color', 'orange');
+              count++;
+            break;
+            case 3:
+              this.style('background-color', 'red');
+              count=0;
+            break;
+            default:
+              break;
+          }
         });
         cy.on('tap', 'edge', function(evt){
             console.log( 'clicked ' + this.id() );
@@ -298,7 +321,6 @@
 
   <body>
     <h1>コンセプトマップ作成画面</h1>
-
     <div id="cy"></div>
 
     <div id="buttons">
