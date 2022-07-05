@@ -21,7 +21,7 @@
 <body>
     <div id="cy"></div>
     <script>
-      let data_json;
+      var data_json;
       let parent;
       let children;
       let relationship;
@@ -29,34 +29,31 @@
         url: '/get/all_graphs',
         type: 'GET',
         dataType: 'json',
+        async: false,
       })
       .done(function (data) {
         const data_stringify = JSON.stringify(data);
         data_json = JSON.parse(data_stringify);
-        console.log(data_json['parent'][0]);
-        parent = data_json['parent']
-        children = data_json['children']
-        relationship = data_json['relationship']
+        parent = data_json['parent'];
+        children = data_json['children'];
+        relationship = data_json['relationship'];
       })
       .fail(function (data) {
         console.log('error');
       });
+      let elements_list = [];
+      $.each(parent,function(index,p){
+        elements_list.push({data: {id: 'p'+index, ele: p}});
+      });
+      $.each(children,function(index,c){
+        elements_list.push({data: {id: 'c'+index, ele: c}});
+      });
       var cy = cytoscape({
         container: document.getElementById('cy'),
-        elements: [
-          { data: { id: 'a' , ele: data_json } },
-          { data: { id: 'b' } },
-          { data: { id: 'c' } },
-          { data: { id: 'd' } },
-          { data: { id: 'e' } },
-          { data: { id: 'f' } },
-          { data: { id: 'g' } },
-          { data: { id: 'h' } },
-          { data: { id: 'i' } },
-          { data: { id: 'j' } }
-          ]
+        elements: elements_list
       });
     cy.on('click', 'node', function(evt){
+      alert(this.data('ele')+"です");
       console.log( 'clicked ' + this.id() + ' ' + this.data('ele'));
     });
     cy.on('tap', 'edge', function(evt){
