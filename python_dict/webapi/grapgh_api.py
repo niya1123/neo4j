@@ -2,23 +2,33 @@ import sys
 
 sys.path.append("/dic/neo4j")
 import json
-
+from collections import defaultdict
 from connection_neo4j import ConnectNeo4j as CN
 from create_MATCH_query import CreateMATCHQuery as CMQ
 from create_node_and_relationship import CreateNodeAndRelationship as CNAR
 from create_DELETE_query import CreateDELETEQuery as CDQ
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, render_template, request, Response
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 def return_json(result):
     data = [record.data()['rel'] for record in result]
-    json_obj = "{"
+    # json_obj = "["
+    json_obj = defaultdict(list)
     for d in data:
-        json_obj += f"['parent':'{d[0]['name']}','children':'{d[2]['name']}','relationship':'{d[1]}'],"
-    json_obj += "}"
-    res = json.dumps(json_obj, ensure_ascii=False)
+        # json_obj += "{"
+        # json_obj += f'"parent":"{d[0]["name"]}","children":"{d[2]["name"]}","relationship":"{d[1]}"'
+        # json_obj += "},"
+        json_obj['parent'].append(d[0]['name'])
+        json_obj['children'].append(d[2]['name'])
+        json_obj['relationship'].append(d[1])
+    # json_obj += "]"
+    # print(json_obj)
+    json_obj = json.dumps(json_obj, ensure_ascii=False, default=str)
+    res = Response(json_obj,content_type='application/json; charset=utf-8')
+    # res.headers.add('content-length',len(res))
+    res.status_code=200
     return res
 
 @app.route('/', methods=["GET"])
@@ -68,7 +78,7 @@ def get_all_graph():
     result = session.run(CMQ._create_MATCH_query())
     res = return_json(result)
     cn.close()
-    return jsonify(res)
+    return res
 
 @app.route('/create/json', methods=["POST"])
 def post_node_and_relationship():
