@@ -33,6 +33,20 @@
         bottom: 0;
         right: 0;
         z-index: 999;
+        width: 50%;
+        height: auto;
+      }
+
+      #cy2 {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        z-index: 999;
+        width: 50%;
+        height: auto;
+        /* background-color: black; */
       }
 
       h1 {
@@ -79,14 +93,19 @@
       .fail(function (data) {
           console.log('error');
       });
-      let elements_list = [];
-      $.each(parent,function(index,p){
-          elements_list.push({data: {id: 'p'+index, ele: p}});
-      });
-      $.each(children,function(index,c){
-          elements_list.push({data: {id: 'c'+index, ele: c}});
-      });
+      let elements_node_list = [];
+      let elements_edge_list = [];
+      let elements = [];
 
+      $.each(relationship,function(index,r){
+          elements_node_list.push({data: {id: 'p'+ parent[index], ele: '親: '+ parent[index]}});
+          elements_node_list.push({data: {id: 'c' + children[index], ele: '子: ' + children[index]}});
+          elements_edge_list.push({data: {id: 'r'+index, source: 'p'+ parent[index], target: 'c' + children[index], relationship: r}});
+          elements.push({data: {id: 'p'+ parent[index], ele: '親: '+ parent[index]}});
+          elements.push({data: {id: 'c' + children[index], ele: '子: ' + children[index]}});
+          elements.push({data: {id: 'r'+index, source: 'p'+ parent[index], target: 'c' + children[index], relationship: r}});
+      });
+      
       document.addEventListener('DOMContentLoaded', function(){
 
         var cy = window.cy = cytoscape({
@@ -94,8 +113,8 @@
 
           layout: {
             name: 'grid',
-            rows: 2,
-            cols: 2
+            rows: 8,
+            cols: 8
           },
 
           style: [
@@ -170,10 +189,10 @@
             }
           ],
 
-          elements: elements_list
+          elements: elements_node_list
         });
         cy.on('dbltap', 'node', function(evt){
-          alert(this.data('ele')+"です");
+          alert(this.data('ele'));
           console.log( 'clicked ' + this.id() + ' ' + this.data('ele'));
         });
         let count = 0;
@@ -206,17 +225,17 @@
 
         var eh = cy.edgehandles();
 
-        document.querySelector('#draw-on').addEventListener('click', function() {
-          eh.enableDrawMode();
-        });
+        // document.querySelector('#draw-on').addEventListener('click', function() {
+        //   eh.enableDrawMode();
+        // });
 
-        document.querySelector('#draw-off').addEventListener('click', function() {
-          eh.disableDrawMode();
-        });
+        // document.querySelector('#draw-off').addEventListener('click', function() {
+        //   eh.disableDrawMode();
+        // });
 
-        document.querySelector('#start').addEventListener('click', function() {
-          eh.start( cy.$('node:selected') );
-        });
+        // document.querySelector('#start').addEventListener('click', function() {
+        //   eh.start( cy.$('node:selected') );
+        // });
 
         var popperEnabled = false;
 
@@ -321,15 +340,57 @@
 
   <body>
     <h1>コンセプトマップ作成画面</h1>
-    <div id="cy"></div>
-
+    <script>
+      document.write("<h1>edgeの数: " + relationship.length + "</h1>")
+    </script>
+    <div class="wrapper">
+      <section class="main">
+        <div id="cy"></div>
+      </section>
+      <section class="side">
+        <div id="cy2"></div>
+      </section>
+  </div>
     <div id="buttons">
-      <button id="start">Start on selected</button>
+      <!-- <button id="start">Start on selected</button>
       <button id="draw-on">Draw mode on</button>
-      <button id="draw-off">Draw mode off</button>
-      <button id="popper">Use custom popper handles</button>
+      <button id="draw-off">Draw mode off</button> -->
+      <button id="popper">線を引く</button>
     </div>
 
+    <script>
+      var cy2 = window.cy2 = cytoscape({
+          container: document.getElementById('cy2'),
+
+          layout: {
+            name: 'grid',
+            rows: 8,
+            cols: 8
+          },
+
+          style: [
+            {
+              selector: 'node[name]',
+              style: {
+                'content': 'data(name)'
+              }
+            },
+
+            {
+              selector: 'edge',
+              style: {
+                'curve-style': 'bezier',
+                'target-arrow-shape': 'triangle'
+              }
+            },
+            
+          ],
+
+          
+
+          elements: elements
+        });
+    </script>
   </body>
 
 </html>
