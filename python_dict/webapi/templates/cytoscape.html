@@ -348,7 +348,7 @@
         <div id="cy"></div>
       </section>
       <section class="side">
-        <div id="cy2"></div>
+        <div id="cy2" hidden></div>
       </section>
   </div>
     <div id="buttons">
@@ -356,10 +356,13 @@
       <button id="draw-on">Draw mode on</button>
       <button id="draw-off">Draw mode off</button> -->
       <button id="popper">線を引く</button>
+      <button id="answer">答えを見る</button>
     </div>
 
     <script>
-      var cy2 = window.cy2 = cytoscape({
+      document.querySelector('#answer').addEventListener('click', function() {
+          $('#cy2').show();
+          var cy2 = window.cy2 = cytoscape({
           container: document.getElementById('cy2'),
 
           layout: {
@@ -383,12 +386,13 @@
                 'target-arrow-shape': 'triangle'
               }
             },
-            
+
           ],
 
           
 
           elements: elements
+        });
         });
     </script>
   </body>
