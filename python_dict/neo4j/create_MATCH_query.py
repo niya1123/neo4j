@@ -57,3 +57,11 @@ class CreateMATCHQuery:
     @staticmethod
     def _create_MATCH_score_query() -> str:
         return "MATCH (n)-[:score]->(m) RETURN n,m"
+
+    @staticmethod
+    def _create_MATCH_userscore_query(username) -> str:
+        return "MATCH (n)-[rel:score]->(m) WHERE n.name = '" + username +"'RETURN rel.score, m.name"
+
+    @staticmethod
+    def _create_MATCH_subject_query(subject) -> str:
+        return "MATCH (n)-[rel:have]->(m) WHERE n.name = '" + subject +"'RETURN n,rel,m"

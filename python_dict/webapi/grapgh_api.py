@@ -31,6 +31,9 @@ def return_json(result):
     res.status_code=200
     return res
 
+def return_score_json(username,result):
+    pass
+
 @app.route('/', methods=["GET"])
 def main():
     return render_template("main.html")
@@ -80,6 +83,19 @@ def get_all_graph():
     cn.close()
     return res
 
+@app.route('/get/score', methods=["POST"])
+def get_score_graph():
+    """
+    特定人物が受験した科目と点数を返す関数. 
+    """
+    username = request.form["username"]
+    cn = CN()
+    session = cn.get_session()
+    result = session.run(CMQ._create_MATCH_userscore_query(username))
+    res = return_json(username,result)
+    cn.close()
+    return res
+
 @app.route('/create/json', methods=["POST"])
 def post_node_and_relationship():
     if request.headers['Content-Type'] != 'application/json':
@@ -117,9 +133,9 @@ def create_node_and_relationship(node1, node2, relationship):
     cn = CN()
     session = cn.get_session()
     result = session.run(CMQ._create_MATCH_query(node1_name=node1, node2_name=node2, relationship=relationship))
-    res = return_json(result)
+    # res = return_json(result)
     cn.close()
-    return  jsonify(res)
+    return  jsonify(res='200')
 
 def create_node_and_relationship_with_type(node1, node2, relationship, type):
     cnar = CNAR()
@@ -130,9 +146,9 @@ def create_node_and_relationship_with_type(node1, node2, relationship, type):
     cn = CN()
     session = cn.get_session()
     result = session.run(CMQ._create_MATCH_query(node1_name=node1, node2_name=node2, relationship=relationship))
-    res = return_json(result)
+    # res = return_json(result)
     cn.close()
-    return  jsonify(res)
+    return  jsonify(res='200')
 
 @app.route('/delete/<string:node_name>', methods=["GET"])
 def delete_node(node_name):
@@ -162,9 +178,9 @@ def get_score():
     cmq = CMQ(cn.driver)
     query = cmq._create_MATCH_score_query()
     result = cn.get_session().run(query)
-    res = return_json(result)
+    # res = return_json(result)
     cn.close()
-    return jsonify(res)
+    return jsonify(res="200")
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=7878, debug=True)
