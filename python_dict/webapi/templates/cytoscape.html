@@ -82,6 +82,7 @@
       let subject;
       let username = "{{username}}";
       let url = '/get/score/'+ username;
+      let score_subject = {};
       $.ajax({
           url: url,
           type: 'GET',
@@ -93,6 +94,9 @@
           data_json = JSON.parse(data_stringify);
           score = data_json['score'];
           subject = data_json['subject'];
+          $.each(subject,function(index, s){
+            score_subject[s] = score[index];
+          });
       })
       .fail(function (data) {
           console.log('error');
@@ -108,7 +112,6 @@
         .done(function (data) {
             const data_stringify = JSON.stringify(data);
             data_json = JSON.parse(data_stringify);
-            // console.log(data_json['parent']);
             $.each(data_json['parent'],function (index,p) {
               parent.push(p);
             });
@@ -378,7 +381,8 @@
       <button id="draw-on">Draw mode on</button>
       <button id="draw-off">Draw mode off</button> -->
       <button id="popper">線を引く</button>
-      <button id="answer">答えを見る</button>
+      <button id="answer">マップの答えを見る</button>
+      <button id="answer_r">理解度の答えを見る</button>
     </div>
 
     <script src="{{ url_for('static', filename='dist/cy2.js') }}"></script>
