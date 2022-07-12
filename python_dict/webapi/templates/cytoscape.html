@@ -135,11 +135,11 @@
       let elements = [];
 
       $.each(relationship,function(index,r){
-          elements_node_list.push({data: {id: 'p'+ parent[index], ele: '親: '+ parent[index]}});
-          elements_node_list.push({data: {id: 'c' + children[index], ele: '子: ' + children[index]}});
+          elements_node_list.push({data: {id: 'p'+ parent[index], ele: '親: '+ parent[index], type: "p"}});
+          elements_node_list.push({data: {id: 'c' + children[index], ele: '子: ' + children[index], type: "c"}});
           elements_edge_list.push({data: {id: 'r'+index, source: 'p'+ parent[index], target: 'c' + children[index], relationship: r}});
-          elements.push({data: {id: 'p'+ parent[index], ele: '親: '+ parent[index]}});
-          elements.push({data: {id: 'c' + children[index], ele: '子: ' + children[index]}});
+          elements.push({data: {id: 'p'+ parent[index], ele: '親: '+ parent[index], type: "p"}});
+          elements.push({data: {id: 'c' + children[index], ele: '子: ' + children[index], type: "c"}});
           elements.push({data: {id: 'r'+index, source: 'p'+ parent[index], target: 'c' + children[index], relationship: r}});
       });
       
@@ -158,6 +158,14 @@
             {
               selector: 'node[name]',
               style: {
+                'content': 'data(name)'
+              }
+            },
+
+            {
+              selector: 'node[type="c"]',
+              style: {
+                'shape': 'triangle',
                 'content': 'data(name)'
               }
             },
@@ -370,6 +378,7 @@
     </script>
     <div class="wrapper">
       <section class="main">
+        <img src="{{ url_for('static', filename='dist/graphdata level.drawio.png') }}" alt="写真" width="450" height="140">
         <div id="cy"></div>
       </section>
       <section class="side">

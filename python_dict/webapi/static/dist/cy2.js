@@ -18,6 +18,14 @@ document.querySelector('#answer').addEventListener('click', function() {
       },
 
       {
+        selector: 'node[type="c"]',
+        style: {
+          'shape': 'triangle',
+          'content': 'data(name)'
+        }
+      },
+
+      {
         selector: 'edge',
         style: {
           'curve-style': 'bezier',
