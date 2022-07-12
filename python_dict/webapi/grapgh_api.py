@@ -31,8 +31,29 @@ def return_json(result):
     res.status_code=200
     return res
 
-def return_score_json(username,result):
-    pass
+def return_user_json(username,user_done_subject,user_subject_score):
+    json_obj = defaultdict(list)
+    json_obj['username'].append(username)
+    for s in user_done_subject:
+        json_obj['subject'].append(s)
+    for ss in user_subject_score:   
+        json_obj['score'].append(ss)
+    json_obj = json.dumps(json_obj, ensure_ascii=False, default=str)
+    res = Response(json_obj,content_type='application/json; charset=utf-8')
+    res.status_code=200
+    return res
+
+def return_subject_json(result):
+    data = [record.data()['rel'] for record in result]
+    json_obj = defaultdict(list)
+    for d in data:
+        json_obj['parent'].append(d[0]['name'])
+        json_obj['children'].append(d[2]['name'])
+        json_obj['relationship'].append(d[1])
+    json_obj = json.dumps(json_obj, ensure_ascii=False, default=str)
+    res = Response(json_obj,content_type='application/json; charset=utf-8')
+    res.status_code=200
+    return res
 
 @app.route('/', methods=["GET"])
 def main():
@@ -82,17 +103,35 @@ def get_all_graph():
     res = return_json(result)
     cn.close()
     return res
-
 @app.route('/get/score', methods=["POST"])
-def get_score_graph():
+def get_score_post_graph():
+    return render_template("cytoscape.html", username=request.form["username"])
+
+@app.route('/get/score/<username>', methods=["GET"])
+def get_score_graph(username):
     """
     特定人物が受験した科目と点数を返す関数. 
     """
-    username = request.form["username"]
     cn = CN()
     session = cn.get_session()
-    result = session.run(CMQ._create_MATCH_userscore_query(username))
-    res = return_json(username,result)
+    score_result = session.run(CMQ._create_MATCH_userscore_query(username))
+    user_done_subject = []
+    user_subject_score = []
+    for record in score_result:
+        user_done_subject.append(record.data()['m.name'])
+        user_subject_score.append(record.data()['rel.score'])
+    res = return_user_json(username, user_done_subject, user_subject_score)
+    return res
+
+@app.route('/get/subject/<subject>', methods=["GET"])
+def get_subject_graph(subject):
+    """
+    特定人物が受験した科目と点数を返す関数. 
+    """
+    cn = CN()
+    session = cn.get_session()
+    result = session.run(CMQ._create_MATCH_subject_query(subject))
+    res = return_subject_json(result)
     cn.close()
     return res
 
@@ -168,9 +207,9 @@ def delete_all_node():
 def create_json():
     return render_template("create_json.html")
 
-@app.route('/cytoscape', methods=["GET"])
-def cytoscape():
-    return render_template("cytoscape.html")
+# @app.route('/cytoscape', methods=["GET"])
+# def cytoscape():
+#     return render_template("cytoscape.html")
 
 @app.route('/get/score', methods=["GET"])
 def get_score():

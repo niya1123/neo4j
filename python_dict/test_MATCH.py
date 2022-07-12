@@ -37,6 +37,7 @@ def return_json(result):
         json_obj['children'].append(d[2]['name'])
         json_obj['relationship'].append(d[1])
     json_obj = json.dumps(json_obj, ensure_ascii=False, default=str)
+    print(json_obj)
     res = Response(json_obj,content_type='application/json; charset=utf-8')
     res.status_code=200
     return res

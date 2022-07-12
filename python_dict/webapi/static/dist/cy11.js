@@ -1,87 +1,11 @@
-<!DOCTYPE>
 
-<html>
-
-  <head>
-    <title>コンセプトマップ作成画面</title>
-
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-
-    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-    <!-- for testing with local version of cytoscape.js -->
-    <!--<script src="../cytoscape.js/build/cytoscape.js"></script>-->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.10/lodash.js"></script>
-    <script src="{{ url_for('static', filename='dist/edge.js') }}"></script>
-
-    <!-- for popper handles -->
-    <script src="https://unpkg.com/@popperjs/core@2"></script>
-	  <script src="https://unpkg.com/cytoscape-popper@2.0.0/cytoscape-popper.js"></script>
-
-    <style>
-      body {
-        font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
-        font-size: 14px;
-      }
-
-      #cy {
-        position: absolute;
-        left: 0;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        z-index: 999;
-        width: 50%;
-        height: auto;
-      }
-
-      #cy2 {
-        position: absolute;
-        left: 50%;
-        top: 0;
-        bottom: 0;
-        right: 0;
-        z-index: 999;
-        width: 50%;
-        height: auto;
-        /* background-color: black; */
-      }
-
-      h1 {
-        opacity: 0.5;
-        font-size: 1em;
-        font-weight: bold;
-      }
-
-      #buttons {
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 99999;
-        margin: 1em;
-      }
-
-      .popper-handle {
-        width: 20px;
-        height: 20px;
-        background: red;
-        border-radius: 20px;
-        z-index: 9999;
-      }
-    </style>
-
-    <script>
-      
-      var data_json;
-      let parent = [];
-      let children = [];
-      let relationship = [];
-      let score;
-      let subject;
-      let username = "{{username}}";
-      let url = '/get/score/'+ username;
+var data_json;
+      let parent;
+      let children;
+      let relationship;
+      let user_name = {{username}};
+      let url = '/get/score/'+ user_name;
+      alert(url)
       $.ajax({
           url: url,
           type: 'GET',
@@ -91,42 +15,13 @@
       .done(function (data) {
           const data_stringify = JSON.stringify(data);
           data_json = JSON.parse(data_stringify);
-          score = data_json['score'];
-          subject = data_json['subject'];
+          parent = data_json['parent'];
+          children = data_json['children'];
+          relationship = data_json['relationship'];
       })
       .fail(function (data) {
           console.log('error');
       });
-
-      for (let index = 0; index < subject.length; index++) {
-        $.ajax({
-          url: '/get/subject/'+subject[index],
-          type: 'GET',
-          dataType: 'json',
-          async: false,
-        })
-        .done(function (data) {
-            const data_stringify = JSON.stringify(data);
-            data_json = JSON.parse(data_stringify);
-            // console.log(data_json['parent']);
-            $.each(data_json['parent'],function (index,p) {
-              parent.push(p);
-            });
-            $.each(data_json['children'],function (index,c) {
-              children.push(c);
-            });
-            $.each(data_json['relationship'],function (index,r) {
-              relationship.push(r);
-            });
-        })
-        .fail(function (data) {
-            console.log('error');
-        });
-        
-      }
-      parent = parent.filter(Boolean);
-      children = children.filter(Boolean);
-      relationship = relationship.filter(Boolean);
       let elements_node_list = [];
       let elements_edge_list = [];
       let elements = [];
@@ -357,31 +252,3 @@
         });
 
       });
-    </script>
-  </head>
-
-  <body>
-    <h1>コンセプトマップ作成画面</h1>
-    <script>
-      document.write("<h1>edgeの数: " + relationship.length + "</h1>")
-    </script>
-    <div class="wrapper">
-      <section class="main">
-        <div id="cy"></div>
-      </section>
-      <section class="side">
-        <div id="cy2" hidden></div>
-      </section>
-  </div>
-    <div id="buttons">
-      <!-- <button id="start">Start on selected</button>
-      <button id="draw-on">Draw mode on</button>
-      <button id="draw-off">Draw mode off</button> -->
-      <button id="popper">線を引く</button>
-      <button id="answer">答えを見る</button>
-    </div>
-
-    <script src="{{ url_for('static', filename='dist/cy2.js') }}"></script>
-  </body>
-
-</html>
