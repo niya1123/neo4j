@@ -3,4 +3,4 @@ mondai.csv
 memo.txt
 records.json
 export.csv
-python_dict/__pycache__
+python_dict/neo4j/__pycache__
