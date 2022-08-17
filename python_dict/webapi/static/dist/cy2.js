@@ -40,13 +40,13 @@ document.querySelector('#answer').addEventListener('click', function() {
     cy2.on('mouseover', 'node', function(event){
       const sub_score = score_subject[this.data('ele').slice(3)]
       if(0 <= sub_score && sub_score < 25){
-        this.style('background-color', 'green');
-      }else if(sub_score >= 25 &&  sub_score < 50){
-        this.style('background-color', 'gold');
-      }else if(sub_score >= 50 &&  sub_score < 75){
-        this.style('background-color', 'orange');
-      }else if(sub_score >= 75 &&  sub_score <= 100){
         this.style('background-color', 'red');
+      }else if(sub_score >= 25 &&  sub_score < 50){
+        this.style('background-color', 'orange');
+      }else if(sub_score >= 50 &&  sub_score < 75){
+        this.style('background-color', 'gold');
+      }else if(sub_score >= 75 &&  sub_score <= 100){
+        this.style('background-color', 'green');
       }else{
         this.style('background-color', 'gray');
       }
