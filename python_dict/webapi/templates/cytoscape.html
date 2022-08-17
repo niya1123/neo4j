@@ -6,6 +6,7 @@
     <title>コンセプトマップ作成画面</title>
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
 
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -20,6 +21,8 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
 	  <script src="https://unpkg.com/cytoscape-popper@2.0.0/cytoscape-popper.js"></script>
 
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.js"></script>
+    <script src="{{ url_for('static', filename='dist/qtip/cytoscape-qtip.js') }}"></script>
     <style>
       body {
         font-family: helvetica neue, helvetica, liberation sans, arial, sans-serif;
@@ -39,6 +42,7 @@
 
       #cy2 {
         position: absolute;
+        background-color: aliceblue;
         left: 50%;
         top: 0;
         bottom: 0;
@@ -236,10 +240,24 @@
 
           elements: elements_node_list
         });
-        cy.on('dbltap', 'node', function(evt){
-          alert(this.data('ele'));
-          console.log( 'clicked ' + this.id() + ' ' + this.data('ele'));
+        cy.on('mouseover', 'node', function(event){
+          let data = this.data('ele');
+          this.qtip({
+              content: data,
+              show: {
+                  event: event.type,
+                  ready: true
+              },
+              hide: {
+                  event: 'mouseout unfocus'
+              },
+              style: {
+                classes: 'qtip-bootstrap',
+					    }
+          }, event);
         });
+
+        
         let count = 0;
         cy.on('taphold', 'node', function(evt){
           switch (count) {

@@ -39,9 +39,22 @@ document.querySelector('#answer').addEventListener('click', function() {
 
       elements: elements
     });
-    cy2.on('dbltap', 'node', function(evt){
-      alert(this.data('ele'));
-      console.log( 'clicked ' + this.id() + ' ' + this.data('ele'));
+
+    cy2.on('mouseover', 'node', function(event){
+      let data = this.data('ele');
+      this.qtip({
+          content: data,
+          show: {
+              event: event.type,
+              ready: true
+          },
+          hide: {
+              event: 'mouseout unfocus'
+          },
+          style: {
+            classes: 'qtip-bootstrap',
+          }
+      }, event);
     });
   });
 
