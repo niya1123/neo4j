@@ -58,6 +58,7 @@ document.querySelector('#answer').addEventListener('click', function() {
         placement: 'bottom',
         hideOnClick: false,
         sticky: "reference",
+        theme: 'white',
 
         // if interactive:
         interactive: true,

@@ -7,7 +7,6 @@
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
-
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -75,6 +74,25 @@
         background: red;
         border-radius: 20px;
         z-index: 9999;
+      }
+
+      .tippy-box[data-theme~='white'] {
+        font-size: 14px;
+        line-height: 20px;
+        color: #333333;
+        padding: 1px;
+        background-color: #ffffff;
+        border: 1px solid #ccc;
+        border: 1px solid rgba(0, 0, 0, 0.2);
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        border-radius: 6px;
+        -webkit-box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+        -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 5px 10px rgb(0 0 0 / 20%);
+        -webkit-background-clip: padding-box;
+        -moz-background-clip: padding;
+        background-clip: padding-box;
       }
     </style>
 
@@ -280,6 +298,7 @@
             placement: 'bottom',
             hideOnClick: false,
             sticky: "reference",
+            theme: 'white',
 
             // if interactive:
             interactive: true,
