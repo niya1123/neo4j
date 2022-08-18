@@ -106,15 +106,19 @@ document.querySelector('#answer').addEventListener('click', function() {
       ins2.push(makeTippy(nodes2[index], nodes2[index].data('ele').slice(3)+"\n"+sub_score+"点"));
     }
 
-    $('#sub').on('mousedown', function mouseState(e) {
-      for (let index = 0; index < ins2.length; index++) {
-        ins2[index].show();
-      }
-    });
-
-    $('#sub').on('mouseup', function mouseState(e) {
-      for (let index = 0; index < ins2.length; index++) {
-        ins2[index].hide();
+    jQuery('#click').on('click', ".hyouji", function() {
+      if (this.value === "ON") {
+          jQuery('input').addClass("clicked");
+          jQuery('.hyouji').replaceWith('<input type="button" class="hyouji btn_center" value="OFF" style="font-size: 1em;color: #D30E1B;">');
+          for (let index = 0; index < ins2.length; index++) {
+            ins2[index].show();
+          }
+      } else {
+          jQuery('input').removeClass('clicked');
+          jQuery('.hyouji').replaceWith('<input type="button" class="hyouji btn_cente" value="ON" style="font-size: 1em;color: #028760;">');
+          for (let index = 0; index < ins2.length; index++) {
+            ins2[index].hide();
+          }
       }
     });
    
