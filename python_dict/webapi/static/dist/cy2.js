@@ -36,22 +36,54 @@ document.querySelector('#answer').addEventListener('click', function() {
     ],
       elements: elements
     });
+    var makeTippy = function(ele, text){
+      var ref = ele.popperRef();
 
-    cy2.on('mouseover', 'node', function(event){
-      const sub_score = score_subject[this.data('ele').slice(3)]
+      // Since tippy constructor requires DOM element/elements, create a placeholder
+      var dummyDomEle = document.createElement('div');
+
+      var tip = tippy( dummyDomEle, {
+        getReferenceClientRect: ref.getBoundingClientRect,
+        trigger: 'manual', // mandatory
+        // dom element inside the tippy:
+        content: function(){ // function can be better for performance
+          var div = document.createElement('div');
+
+          div.innerHTML = text;
+
+          return div;
+        },
+        // your own preferences:
+        arrow: true,
+        placement: 'bottom',
+        hideOnClick: false,
+        sticky: "reference",
+
+        // if interactive:
+        interactive: true,
+        appendTo: document.body // or append dummyDomEle to document.body
+      } );
+
+      return tip;
+    };
+    let nodes2 = cy2.filter('node');
+    for (let index = 0; index < nodes2.length; index++) {
+      const sub_score = score_subject[nodes2[index].data('ele').slice(3)]
       if(0 <= sub_score && sub_score < 25){
-        this.style('background-color', 'red');
+        nodes2[index].style('background-color', 'red');
       }else if(sub_score >= 25 &&  sub_score < 50){
-        this.style('background-color', 'orange');
+        nodes2[index].style('background-color', 'orange');
       }else if(sub_score >= 50 &&  sub_score < 75){
-        this.style('background-color', 'gold');
+        nodes2[index].style('background-color', 'gold');
       }else if(sub_score >= 75 &&  sub_score <= 100){
-        this.style('background-color', 'green');
+        nodes2[index].style('background-color', 'green');
       }else{
-        this.style('background-color', 'gray');
+        nodes2[index].style('background-color', 'gray');
       }
-      this.lock();
-      let data = this.data('ele')+"\n"+sub_score+"点";
+    };
+    
+    cy2.on('mouseover', 'node', function(event){
+      let data = this.data('ele').slice(3)+"\n"+score_subject[this.data('ele').slice(3)]+"点";
       this.qtip({
           content: data,
           show: {
@@ -65,12 +97,24 @@ document.querySelector('#answer').addEventListener('click', function() {
             classes: 'qtip-bootstrap',
           }
       }, event);
-      
-      unlock(this);
-  
-      function unlock(obj) {
-        obj.unlock();
-      }
-      
     });
+    
+    let ins2 = [];
+    for (let index = 0; index < nodes2.length; index++) {
+      const sub_score = score_subject[nodes2[index].data('ele').slice(3)]
+      ins2.push(makeTippy(nodes2[index], nodes2[index].data('ele').slice(3)+"\n"+sub_score+"点"));
+    }
+
+    $('#sub').on('mousedown', function mouseState(e) {
+      for (let index = 0; index < ins2.length; index++) {
+        ins2[index].show();
+      }
+    });
+
+    $('#sub').on('mouseup', function mouseState(e) {
+      for (let index = 0; index < ins2.length; index++) {
+        ins2[index].hide();
+      }
+    });
+   
   });

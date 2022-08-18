@@ -20,6 +20,8 @@
     <!-- for popper handles -->
     <script src="https://unpkg.com/@popperjs/core@2"></script>
 	  <script src="https://unpkg.com/cytoscape-popper@2.0.0/cytoscape-popper.js"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+
 
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.js"></script>
     <script src="{{ url_for('static', filename='dist/qtip/cytoscape-qtip.js') }}"></script>
@@ -241,7 +243,7 @@
           elements: elements_node_list
         });
         cy.on('mouseover', 'node', function(event){
-          let data = this.data('ele');
+          let data = this.data('ele').slice(3);
           this.qtip({
               content: data,
               show: {
@@ -255,6 +257,53 @@
                 classes: 'qtip-bootstrap',
 					    }
           }, event);
+        });
+        var makeTippy = function(ele, text){
+          var ref = ele.popperRef();
+
+          // Since tippy constructor requires DOM element/elements, create a placeholder
+          var dummyDomEle = document.createElement('div');
+
+          var tip = tippy( dummyDomEle, {
+            getReferenceClientRect: ref.getBoundingClientRect,
+            trigger: 'manual', // mandatory
+            // dom element inside the tippy:
+            content: function(){ // function can be better for performance
+              var div = document.createElement('div');
+
+              div.innerHTML = text;
+
+              return div;
+            },
+            // your own preferences:
+            arrow: true,
+            placement: 'bottom',
+            hideOnClick: false,
+            sticky: "reference",
+
+            // if interactive:
+            interactive: true,
+            appendTo: document.body // or append dummyDomEle to document.body
+          } );
+
+          return tip;
+        };
+        let nodes = cy.filter('node');
+        let ins = [];
+        for (let index = 0; index < nodes.length; index++) {
+          ins.push(makeTippy(nodes[index], nodes[index].data('ele').slice(3)));
+        }
+
+        $('#sub').on('mousedown', function mouseState(e) {
+          for (let index = 0; index < ins.length; index++) {
+            ins[index].show();
+          }
+        });
+
+        $('#sub').on('mouseup', function mouseState(e) {
+          for (let index = 0; index < ins.length; index++) {
+            ins[index].hide();
+          }
         });
 
         
@@ -409,6 +458,7 @@
       <button id="draw-off">Draw mode off</button> -->
       <button id="popper">線を引く</button>
       <button id="answer">マップの答えを見る</button>
+      <button id="sub">すべてのデータを見る</button>
     </div>
 
     <script src="{{ url_for('static', filename='dist/cy2.js') }}"></script>
