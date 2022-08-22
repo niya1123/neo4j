@@ -106,6 +106,9 @@ document.querySelector('#answer').addEventListener('click', function() {
       ins2.push(makeTippy(nodes2[index], nodes2[index].data('ele').slice(3)+"\n"+sub_score+"点"));
     }
 
+    for (let index = 0; index < ins2.length; index++) {
+      ins2[index].show();
+    }
     jQuery('#click').on('click', ".hyouji", function() {
       if (this.value === "ON") {
           jQuery('input').addClass("clicked");

@@ -317,6 +317,9 @@
           ins.push(makeTippy(nodes[index], nodes[index].data('ele').slice(3)));
         }
 
+        for (let index = 0; index < ins.length; index++) {
+          ins[index].show();
+        }
         jQuery('#click').on('click', ".hyouji", function() {
             if (this.value === "ON") {
                 jQuery('input').addClass("clicked");
@@ -487,7 +490,7 @@
         <button id="popper">線を引く</button>
         <button id="answer">マップの答えを見る</button>
         <div id="click">
-          すべてのデータを見る: <input type="button" class="hyouji btn_center" value="ON" style="font-size: 1em;color: #028760;position: center;">
+          すべてのデータを見る: <input type="button" class="hyouji btn_center" value="OFF" style="font-size: 1em;color: #D30E1B;position: center;">
         </div>
       </div>
     </div>
