@@ -7,10 +7,6 @@
 
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
 		<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.2.0/jquery.qtip.css">
-<<<<<<< HEAD
-
-=======
->>>>>>> 3c8669dca2fb3166225b494e5bb31d48145d033a
     <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
@@ -269,11 +265,7 @@
           elements: elements_node_list
         });
         cy.on('mouseover', 'node', function(event){
-<<<<<<< HEAD
-          let data = this.data('ele');
-=======
           let data = this.data('ele').slice(3);
->>>>>>> 3c8669dca2fb3166225b494e5bb31d48145d033a
           this.qtip({
               content: data,
               show: {
@@ -288,8 +280,6 @@
 					    }
           }, event);
         });
-<<<<<<< HEAD
-=======
         var makeTippy = function(ele, text){
           var ref = ele.popperRef();
 
@@ -345,26 +335,25 @@
                 }
             }
         });
->>>>>>> 3c8669dca2fb3166225b494e5bb31d48145d033a
 
         
         let count = 0;
         cy.on('taphold', 'node', function(evt){
           switch (count) {
             case 0:
-              this.style('background-color', 'green');
+              this.style('background-color', 'red');
               count++;
               break;
             case 1:
-              this.style('background-color', 'gold');
-              count++;
-            break;
-            case 2:
               this.style('background-color', 'orange');
               count++;
             break;
+            case 2:
+              this.style('background-color', 'gold');
+              count++;
+            break;
             case 3:
-              this.style('background-color', 'red');
+              this.style('background-color', 'green');
               count=0;
             break;
             default:
@@ -497,10 +486,6 @@
       <!-- <button id="start">Start on selected</button>
       <button id="draw-on">Draw mode on</button>
       <button id="draw-off">Draw mode off</button> -->
-<<<<<<< HEAD
-      <button id="popper">線を引く</button>
-      <button id="answer">マップの答えを見る</button>
-=======
       <div>
         <button id="popper">線を引く</button>
         <button id="answer">マップの答えを見る</button>
@@ -508,7 +493,6 @@
           すべてのデータを見る: <input type="button" class="hyouji btn_center" value="OFF" style="font-size: 1em;color: #D30E1B;position: center;">
         </div>
       </div>
->>>>>>> 3c8669dca2fb3166225b494e5bb31d48145d033a
     </div>
 
     <script src="{{ url_for('static', filename='dist/cy2.js') }}"></script>
