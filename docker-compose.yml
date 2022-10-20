@@ -29,6 +29,8 @@ services:
       - ./python_dict:/dic
     extra_hosts:                  # 追加
             - localhost:172.18.0.1
+    environment:
+      TZ: Asia/Tokyo
     tty: true
     stdin_open: true
 
